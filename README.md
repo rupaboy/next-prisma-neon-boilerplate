@@ -1,3 +1,27 @@
+
+🧩 Framework: Next.js ✅
+(create-next-app)
+
+🗄️ ORM : Prisma ORM ✅
+prisma migrate dev
+prisma generate
+
+🐘 Base de datos: PostgreSQL (Neon) ✅
+Variables de entorno
+Conexión confirmada por queries
+
+🔌 Backend: API Routes (App Router) ✅
+/api/*
+CRUD dinámico
+
+🌐 Frontend: React (incluido en Next) ✅
+
+🚀 Deploy: Vercel (próximamente) ⏳
+
+
+____________________________________________
+
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
