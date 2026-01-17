@@ -1,0 +1,75 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum ArticleStatus {
+  DRAFT
+  REVIEW
+  PUBLISHED
+  ARCHIVED
+}
+
+model ArticleLayout {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  template    Int
+  articles    Article[]
+}
+
+model Section {
+  id          Int       @id @default(autoincrement())
+  name        String
+  slug        String   @unique
+  description String
+  articles    Article[]
+}
+
+model User {
+  id       Int       @id @default(autoincrement())
+  name     String
+  alias    String    @unique
+  email    String    @unique
+  role     String
+  articles Article[]
+}
+
+model Tag {
+  id        Int     @id @default(autoincrement())
+  name      String  @unique
+  slug      String  @unique
+  articles  Article[] @relation("ArticleTags")
+}
+
+model Article {
+  id        Int            @id @default(autoincrement())
+  sectionId Int
+  authorId  Int
+  layoutId  Int @default(1)
+  layout    ArticleLayout  @relation(fields: [layoutId], references: [id])
+
+  title     String
+  subtitle  String?
+  excerpt   String?
+  summary   String
+  content   String
+  highlight String?
+  coverImage String?
+  tags      Tag[] @relation("ArticleTags")
+  status    ArticleStatus @default(DRAFT)
+  createdAt DateTime      @default(now())
+
+  section Section @relation(fields: [sectionId], references: [id])
+  author  User    @relation(fields: [authorId], references: [id])
+}
